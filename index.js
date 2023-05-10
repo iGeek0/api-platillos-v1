@@ -62,6 +62,25 @@ app.post("/platillos",(req, res)=>{
     })
 });
 
+app.delete("/platillos/:id",(req, res)=>{
+    const id = parseInt(req.params.id);
+    const indice = platillos.findIndex(platillo => {return platillo.id === id});
+    // el -1 es porque findIndex cuando no ecuentra conicidencias regresa -1
+    if (indice !== -1) {
+        platillos.splice(indice, 1);
+        res.json({
+            message: "El platillo se elimino",
+            data: null
+        })
+    } else {
+        res.json({
+            message: "El id enviado no pertenece a un platillo",
+            data: null
+        })
+    }
+
+});
+
 
 app.listen(process.env.PORT, ()=>{
     console.log("Servidor iniciado en el puerto: "+ process.env.PORT);
